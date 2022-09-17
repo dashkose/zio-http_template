@@ -4,9 +4,9 @@ import com.accenture.api.Api
 import com.accenture.config.ApiConfig
 import com.accenture.controller.LibraryController
 import com.accenture.services.LibraryService
-import sttp.tapir.server.ziohttp.{ZioHttpInterpreter, ZioHttpServerOptions}
 import sttp.tapir.server.interceptor.log.DefaultServerLog
 import sttp.tapir.server.metrics.prometheus.PrometheusMetrics
+import sttp.tapir.server.ziohttp.{ZioHttpInterpreter, ZioHttpServerOptions}
 import zhttp.http.HttpApp
 import zhttp.service.server.ServerChannelFactory
 import zhttp.service.{EventLoopGroup, Server}

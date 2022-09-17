@@ -38,6 +38,12 @@ lazy val rootProject = (project in file("."))
   )
   .enablePlugins(JavaAppPackaging, DockerPlugin)
 
+inThisBuild(List(
+  semanticdbEnabled := true,
+  semanticdbVersion := scalafixSemanticdb.revision,
+  scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
+))
+
 addCommandAlias("fmtAll", ";scalafmtSbt;scalafmtAll")
 addCommandAlias("checkFmtAll", ";scalafmtSbtCheck;scalafmtCheckAll")
 addCommandAlias("publishLocal", ";docker:stage;docker:publishLocal")

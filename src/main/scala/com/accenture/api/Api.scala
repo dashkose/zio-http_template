@@ -17,12 +17,18 @@ trait Api {
 object Api {
   class ApiImp(libraryController: LibraryController, prometheusMetrics: PrometheusMetrics[Task]) extends Api {
 
+    @SuppressWarnings(Array("stryker4s.mutation.StringLiteral"))
+    private val Name = "zio_http4s"
+
+    @SuppressWarnings(Array("stryker4s.mutation.StringLiteral"))
+    private val Version = "1.0.0"
+
     val booksListingServerEndpoint: ZServerEndpoint[Any, Any] = booksListing.zServerLogic(_ => libraryController.getBooks)
 
     val apiEndpoints: List[ZServerEndpoint[Any, Any]] = List(booksListingServerEndpoint)
 
     val docEndpoints: List[ZServerEndpoint[Any, Any]] = SwaggerInterpreter()
-      .fromServerEndpoints[Task](apiEndpoints, "zio_http4s", "1.0.0")
+      .fromServerEndpoints[Task](apiEndpoints, Name, Version)
 
     val metricsEndpoint: ZServerEndpoint[Any, Any] = prometheusMetrics.metricsEndpoint
 

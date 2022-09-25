@@ -39,5 +39,4 @@ lazy val rootProject = (project in file("."))
   .enablePlugins(JavaAppPackaging, DockerPlugin)
 
 addCommandAlias("fmtAll", ";scalafmtSbt;scalafmtAll")
-addCommandAlias("checkFmtAll", ";scalafmtSbtCheck;scalafmtCheckAll")
-addCommandAlias("publishLocal", ";docker:stage;docker:publishLocal")
+addCommandAlias("sanity", ";scalafmtCheckAll;test")

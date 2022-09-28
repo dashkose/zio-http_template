@@ -34,8 +34,9 @@ object Main extends ZIOAppDefault {
 
   private def buildServer(apiConfig: ApiConfig, prometheusMetrics: PrometheusMetrics[Task], api: Api): URIO[Any, ExitCode] = {
     val logError = (msg: String, maybeError: Option[Throwable]) =>
-      maybeError.map(ex => ZIO.logErrorCause(msg, Cause.die(ex)))
-      .getOrElse(ZIO.logDebug(msg))
+      maybeError
+        .map(ex => ZIO.logErrorCause(msg, Cause.die(ex)))
+        .getOrElse(ZIO.logDebug(msg))
 
     val defaultServerLog =
       DefaultServerLog[Task](
@@ -43,7 +44,8 @@ object Main extends ZIOAppDefault {
         doLogWhenHandled = logError,
         doLogAllDecodeFailures = logError,
         doLogExceptions = (msg: String, ex: Throwable) => logError(msg, Some(ex)),
-        noLog = ZIO.unit)
+        noLog = ZIO.unit
+      )
 
     val serverOptions: ZioHttpServerOptions[Any] =
       ZioHttpServerOptions.customiseInterceptors
@@ -52,7 +54,8 @@ object Main extends ZIOAppDefault {
         .options
 
     val app: HttpApp[Any, Throwable] = ZioHttpInterpreter(serverOptions).toHttp(api.allEndpoints)
-    Server.start(apiConfig.port, app)
+    Server
+      .start(apiConfig.port, app)
       .provideSomeLayer(EventLoopGroup.auto() ++ ServerChannelFactory.auto ++ Scope.default)
       .exitCode
   }

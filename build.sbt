@@ -18,6 +18,7 @@ lazy val rootProject = (project in file("."))
       version := "0.1.0-SNAPSHOT",
       organization := "com.accenture",
       scalaVersion := "3.2.0",
+      version := sys.env.getOrElse("RELEASE_VERSION", "0.1"),
       libraryDependencies ++= Seq(
         "com.softwaremill.sttp.tapir" %% "tapir-zio-http-server" % tapirVersion,
         "com.softwaremill.sttp.tapir" %% "tapir-prometheus-metrics" % tapirVersion,

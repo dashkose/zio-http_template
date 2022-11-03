@@ -6,15 +6,16 @@ on:
 
 
 jobs:
-  debug:
-    name: Debug
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Set release version
+      - uses: actions/checkout@v2
+      - uses: olafurpg/setup-scala@v11
+        with:
+          java-version: adopt@
+      - name: Publish release
         env:
           RELEASE_VERSION: ${{ github.event.release.tag_name }}
-        run: env | sort
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        run:
+          "sbt docker:publishLocal"

@@ -13,7 +13,6 @@ jobs:
       - name: Set release version
         env:
           RELEASE_VERSION: ${{ github.event.release.tag_name }}
-      - name: Dump env
         run: env | sort
       - name: Dump GitHub context
         env:

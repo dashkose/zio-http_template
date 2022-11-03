@@ -10,6 +10,9 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     steps:
+      - name: Set release version
+        env:
+          RELEASE_VERSION: ${{ github.event.release.tag_name }}
       - name: Dump env
         run: env | sort
       - name: Dump GitHub context
